@@ -10,7 +10,7 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - Deploy: Vercel  ·  Claude: Anthropic API via fetch() / Python SDK
 
 ## Constraints
-- No paid external APIs  ·  Free APIs I'm using: Claude (paid currently *look into this*)
+- No paid external APIs  ·  Free APIs I'm using: Claude API
 - No build step (Phases 1–2)  ·  Core logic before CSS
 
 ## Done looks like
@@ -19,13 +19,15 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - User can upload another picture or choose a different scale value and get roasted again without restarting the program.
 
 ## What's working  (update daily)
-- Starting Project
+- Upload and roast features are working
+- PC and mobile layouts (*test*) 
 
 ## What I'm working on / what's broken
 - UI improvments
-- Roast length
-- Program layout for PC and mobile
 - Improvements to brutality slider
+- Roast quality
+- README.md
+- Slider pictures
 
 ## The prompt that worked  (paste here when you find it)
 [Paste once Claude starts producing good output]
