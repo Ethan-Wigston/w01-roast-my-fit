@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roast My Fit</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Bebas Neue', 'cursive'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            flame: '#FF4500',
+            ember: '#ff6a2f',
+            coal: '#0a0a0a',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body { background: #0a0a0a; font-family: 'Inter', sans-serif; }
+
+    /* ── custom slider ── */
+    #brutality-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    #brutality-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--thumb-color, #FF4500);
+      border: 2px solid #0a0a0a;
+      box-shadow: 0 0 8px var(--thumb-color, #FF4500);
+      cursor: pointer;
+      transition: box-shadow 0.15s;
+    }
+    #brutality-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--thumb-color, #FF4500);
+      border: 2px solid #0a0a0a;
+      box-shadow: 0 0 8px var(--thumb-color, #FF4500);
+      cursor: pointer;
+    }
+    #brutality-slider:active::-webkit-slider-thumb {
+      box-shadow: 0 0 16px var(--thumb-color, #FF4500);
+    }
+
+    /* ── drop zone ── */
+    #drop-zone {
+      border: 2px dashed #333;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #drop-zone.drag-over {
+      border-color: #FF4500;
+      background: rgba(255,69,0,0.06);
+    }
+    #drop-zone.has-image {
+      border-color: #FF4500;
+      border-style: solid;
+    }
+
+    /* ── loading pulse ── */
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    #loading-icon { animation: flicker 1.2s ease-in-out infinite; }
+
+    /* ── roast output ── */
+    #output {
+      border-left: 3px solid #FF4500;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-white flex flex-col items-center px-4 py-10 gap-8">
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="text-center">
+    <h1 class="font-display text-6xl sm:text-8xl tracking-widest text-white leading-none">
+      ROAST MY FIT
+    </h1>
+    <p class="mt-2 text-zinc-400 text-sm sm:text-base">
+      Upload your outfit. Brace yourself.
+    </p>
+  </header>
+
+  <!-- ── Main card ──────────────────────────────────────────── -->
+  <main class="w-full max-w-md flex flex-col gap-6">
+
+    <!-- Upload -->
+    <div id="drop-zone"
+         class="rounded-2xl p-6 flex flex-col items-center gap-4 cursor-pointer select-none">
+
+      <!-- Prompt (hidden once image loaded) -->
+      <div id="upload-prompt" class="flex flex-col items-center gap-2 text-center">
+        <svg class="w-12 h-12 text-zinc-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+        </svg>
+        <p class="text-zinc-300 font-medium">Drop your fit here</p>
+        <p class="text-zinc-600 text-xs">or tap to choose a photo</p>
+      </div>
+
+      <!-- Preview -->
+      <div id="preview" class="hidden w-full">
+        <img id="preview-img" src="" alt="Outfit preview"
+             class="w-full rounded-xl object-cover max-h-72" />
+        <p class="mt-2 text-center text-xs text-zinc-500">Tap to swap photo</p>
+      </div>
+
+      <input id="file-input" type="file" accept="image/*" class="hidden" />
+    </div>
+
+    <!-- Brutality slider -->
+    <div class="flex flex-col gap-3">
+      <div class="flex justify-between items-center">
+        <span class="font-display text-xl tracking-widest text-white">BRUTALITY</span>
+        <span id="slider-val" class="font-display text-xl text-flame">3</span>
+      </div>
+
+      <!-- Track + fill -->
+      <div class="relative h-6 flex items-center">
+        <div class="absolute inset-x-0 h-1.5 rounded-full bg-zinc-800"></div>
+        <div id="slider-fill" class="absolute left-0 h-1.5 rounded-full transition-all duration-75"
+             style="width:50%"></div>
+        <input id="brutality-slider" type="range" min="1" max="5" value="3" step="1"
+               class="relative w-full" />
+      </div>
+
+      <!-- Labels -->
+      <div class="flex justify-between text-zinc-500 text-[10px] sm:text-xs leading-tight text-center">
+        <span class="w-1/5">Polite<br/>Chef</span>
+        <span class="w-1/5">Disap&shy;pointed</span>
+        <span class="w-1/5">Kitchen<br/>Night&shy;mare</span>
+        <span class="w-1/5">Hell's<br/>Kitchen</span>
+        <span class="w-1/5 text-flame font-semibold">IT'S<br/>RAW</span>
+      </div>
+    </div>
+
+    <!-- Roast button -->
+    <button id="roast-btn" disabled
+            class="font-display text-3xl tracking-widest py-4 rounded-2xl
+                   bg-flame text-white transition-all duration-200
+                   disabled:opacity-30 disabled:cursor-not-allowed
+                   enabled:hover:bg-ember enabled:hover:scale-[1.02]
+                   enabled:active:scale-95 enabled:shadow-[0_0_24px_rgba(255,69,0,0.5)]">
+      ROAST ME
+    </button>
+
+    <!-- Loading -->
+    <div id="loading" class="hidden flex flex-col items-center gap-3 py-4">
+      <span id="loading-icon" class="text-4xl">🔥</span>
+      <p class="text-zinc-400 text-sm">Gordon is judging you...</p>
+    </div>
+
+    <!-- Error -->
+    <p id="error-msg" class="hidden text-red-400 text-sm text-center px-2"></p>
+
+    <!-- Output -->
+    <div id="output" class="hidden flex flex-col gap-6 pl-4 py-1">
+
+      <section>
+        <h2 class="font-display text-2xl tracking-widest text-flame mb-2">🔥 THE ROAST</h2>
+        <p id="roast-text" class="text-zinc-200 leading-relaxed text-sm sm:text-base whitespace-pre-wrap"></p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-2xl tracking-widest text-zinc-300 mb-2">👔 REAL TALK</h2>
+        <p id="feedback-text" class="text-zinc-400 leading-relaxed text-sm sm:text-base whitespace-pre-wrap"></p>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer class="text-zinc-700 text-xs pb-4">Powered by Claude · No fits are safe</footer>
+
+  <script src="/src/app.js"></script>
+
+  <!-- keep slider label in sync -->
+  <script>
+    const _s = document.getElementById('brutality-slider');
+    const _v = document.getElementById('slider-val');
+    _s.addEventListener('input', () => _v.textContent = _s.value);
+  </script>
+</body>
+</html>
