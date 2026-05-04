@@ -5,6 +5,7 @@ const previewImg = document.getElementById('preview-img');
 const roastBtn = document.getElementById('roast-btn');
 const slider = document.getElementById('brutality-slider');
 const sliderFill = document.getElementById('slider-fill');
+const sliderLabels = document.querySelectorAll('#slider-labels span');
 const output = document.getElementById('output');
 const roastText = document.getElementById('roast-text');
 const feedbackText = document.getElementById('feedback-text');
@@ -27,11 +28,15 @@ function updateSlider() {
   const pct = ((val - 1) / 4) * 100;
   const color = SLIDER_COLORS[val - 1];
   sliderFill.style.width = pct + '%';
-  sliderFill.style.background = color;
+  sliderFill.style.backgroundSize = sliderFill.parentElement.offsetWidth + 'px 100%';
   slider.style.setProperty('--thumb-color', color);
+  sliderLabels.forEach((label, i) => {
+    label.style.color = i + 1 === val ? color : '#555';
+  });
 }
 
 slider.addEventListener('input', updateSlider);
+window.addEventListener('resize', updateSlider);
 updateSlider();
 
 // ── Upload helpers ────────────────────────────────────────────────────────────
