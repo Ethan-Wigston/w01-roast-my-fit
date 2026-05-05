@@ -112,6 +112,9 @@ roastBtn.addEventListener('click', async () => {
 
   showLoading();
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30000);
+
   try {
     const res = await fetch('/api/roast', {
       method: 'POST',
@@ -120,8 +123,10 @@ roastBtn.addEventListener('click', async () => {
         image_base64: imageBase64,
         brutality_level: parseInt(slider.value),
       }),
+      signal: controller.signal,
     });
 
+    clearTimeout(timeoutId);
     const data = await res.json();
 
     if (!res.ok) {
@@ -130,8 +135,13 @@ roastBtn.addEventListener('click', async () => {
     }
 
     showResult(data.roast, data.feedback);
-  } catch {
-    showError('Network error — are you online?');
+  } catch (err) {
+    clearTimeout(timeoutId);
+    if (err.name === 'AbortError') {
+      showError('Request timed out — try again.');
+    } else {
+      showError('Couldn\'t connect — check your internet and try again.');
+    }
   }
 });
 
@@ -141,6 +151,8 @@ function showLoading() {
   output.classList.add('hidden');
   errorMsg.classList.add('hidden');
   roastBtn.disabled = true;
+  dropZone.classList.add('uploading');
+  fileInput.disabled = true;
 }
 
 function showResult(roast, feedback) {
@@ -150,6 +162,8 @@ function showResult(roast, feedback) {
   output.classList.remove('hidden');
   errorMsg.classList.add('hidden');
   roastBtn.disabled = false;
+  dropZone.classList.remove('uploading');
+  fileInput.disabled = false;
   output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -158,6 +172,8 @@ function showError(msg) {
   errorMsg.textContent = msg;
   errorMsg.classList.remove('hidden');
   roastBtn.disabled = false;
+  dropZone.classList.remove('uploading');
+  fileInput.disabled = false;
 }
 
 function hideOutput() {
