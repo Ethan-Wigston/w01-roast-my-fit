@@ -107,8 +107,8 @@
   <div class="flex-1 bg-[#111] flex flex-col md:min-h-0">
 
     <!-- Header -->
-    <header class="px-6 pt-6 pb-4 text-center">
-      <h1 class="font-display text-white uppercase" style="font-size:2.25rem;letter-spacing:0.15em;">
+    <header class="px-6 pt-3 pb-2 text-center">
+      <h1 class="font-display text-white uppercase" style="font-size:3.5rem;letter-spacing:0.15em;">
         ROAST MY FIT
       </h1>
     </header>
@@ -117,9 +117,10 @@
     <div class="grid grid-cols-1 md:grid-cols-2 md:flex-1 md:min-h-0">
 
       <!-- LEFT: controls -->
-      <div id="left-col" class="p-5 flex flex-col gap-5 md:overflow-y-auto">
+      <div id="left-col" class="p-5 md:pt-0 flex flex-col gap-3 md:overflow-y-auto">
 
         <!-- Upload zone -->
+        <div class="flex flex-col gap-1 flex-1 min-h-0">
         <div id="drop-zone"
              class="rounded-lg bg-[#0a0a0a] p-4 flex flex-col items-center justify-center gap-3 cursor-pointer select-none flex-1 min-h-0">
 
@@ -139,12 +140,14 @@
 
           <input id="file-input" type="file" accept="image/*" class="hidden" />
         </div>
+        <p id="upload-hint" class="hidden text-center text-[#555]" style="font-size:0.5625rem;">Click the box to upload a different image</p>
+        </div>
 
         <!-- Brutality slider -->
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
           <div class="flex justify-between items-center">
             <span class="text-[#888] text-[0.6875rem] uppercase tracking-widest">Brutality</span>
-            <span id="slider-val" class="text-[#ef4444] text-sm font-medium">3</span>
+            <span id="slider-val" class="text-sm font-medium">3</span>
           </div>
 
           <div class="relative h-5 flex items-center">
@@ -154,17 +157,19 @@
           </div>
 
           <div id="slider-labels" class="flex justify-between text-center leading-tight" style="font-size:0.5625rem;">
-            <span class="w-1/5">Polite<br/>chef</span>
+            <span class="w-1/5">Polite</span>
             <span class="w-1/5">Disap&shy;pointed</span>
             <span class="w-1/5">Night&shy;mare</span>
             <span class="w-1/5">Hell's<br/>kitchen</span>
             <span class="w-1/5 font-medium">IT'S<br/>RAW</span>
           </div>
+
+          <div id="slider-emoji" class="text-center text-lg leading-none">😈</div>
         </div>
 
         <!-- Roast button -->
         <button id="roast-btn" disabled
-                class="w-full py-3 rounded-lg bg-[#ef4444] text-white font-medium uppercase text-sm
+                class="w-full py-2 rounded-lg bg-[#ef4444] text-white font-medium uppercase text-sm
                        tracking-[0.08em] transition-colors duration-150
                        disabled:opacity-30 disabled:cursor-not-allowed
                        enabled:hover:bg-[#dc2626]">
@@ -174,30 +179,34 @@
       </div>
 
       <!-- RIGHT: output -->
-      <div id="right-col" class="bg-[#0d0d0d] p-5 flex flex-col md:overflow-y-auto">
+      <div id="right-col" class="p-5 md:pt-0 flex flex-col">
 
-        <!-- Loading -->
-        <div id="loading" class="hidden flex flex-col items-center justify-center flex-1 gap-3">
-          <span id="loading-icon" class="text-3xl">🔥</span>
-          <p class="text-[#555] text-xs">Get ready to be roasted...</p>
-        </div>
+        <div class="rounded-lg bg-[#0d0d0d] flex-1 min-h-0 flex flex-col p-5 md:overflow-y-auto">
 
-        <!-- Error -->
-        <p id="error-msg" class="hidden text-red-500 text-xs text-center py-10"></p>
-
-        <!-- Output -->
-        <div id="output" class="hidden flex flex-col gap-4">
-
-          <div>
-            <p class="text-[0.75rem] uppercase tracking-[0.06em] mb-2 text-[#ef4444]">The Roast</p>
-            <p id="roast-text" class="text-[#ccc] text-[0.8125rem] leading-relaxed whitespace-pre-wrap"></p>
+          <!-- Loading -->
+          <div id="loading" class="hidden flex flex-col items-center justify-center flex-1 gap-3">
+            <span id="loading-icon" class="text-3xl">🔥</span>
+            <p class="text-[#555] text-xs">Get ready to be roasted...</p>
           </div>
 
-          <div class="output-divider"></div>
+          <!-- Error -->
+          <p id="error-msg" class="hidden text-red-500 text-xs text-center py-10"></p>
 
-          <div>
-            <p class="text-[0.75rem] uppercase tracking-[0.06em] mb-2 text-[#2dd4bf]">Real Talk</p>
-            <p id="feedback-text" class="text-[#888] text-[0.8125rem] leading-relaxed whitespace-pre-wrap"></p>
+          <!-- Output -->
+          <div id="output" class="hidden flex flex-col gap-4">
+
+            <div>
+              <p class="text-[0.75rem] uppercase tracking-[0.06em] mb-2 text-[#ef4444]">The Roast</p>
+              <p id="roast-text" class="text-[#ccc] text-[0.8125rem] leading-relaxed whitespace-pre-wrap"></p>
+            </div>
+
+            <div class="output-divider"></div>
+
+            <div>
+              <p class="text-[0.75rem] uppercase tracking-[0.06em] mb-2 text-[#2dd4bf]">Real Talk</p>
+              <p id="feedback-text" class="text-[#888] text-[0.8125rem] leading-relaxed whitespace-pre-wrap"></p>
+            </div>
+
           </div>
 
         </div>
