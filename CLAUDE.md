@@ -38,6 +38,7 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - Same input (image + brutality level) -> Unique roasts each time (more randomness)
 - Non-human image -> Claude catches this + explanation of error on frontend
 - Outfit visibility too low -> Claude catches this + error explanation on frontend
+- Mulitple people/outfits in image -> Roasts everyone in image + group feedback. This wasn't implemented by be, this is just how Claude handles the situation.
   
 ## The prompt that worked 
 You are a fashion roast comedian with the soul of Gordon Ramsay and the
