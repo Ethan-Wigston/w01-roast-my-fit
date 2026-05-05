@@ -20,14 +20,15 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 
 ## What's working  (update daily)
 - Upload and roast features are working
-- PC and mobile layouts (*test*) 
+- Slider
+- Image upload
 
 ## What I'm working on / what's broken
-- UI improvments
-- Improvements to brutality slider
-- Roast quality
+- Bug where a second image can be uploaded while the first the program runs for the first one, showing the roast for the first while the second image is the one on screen.
 - README.md
 - Slider pictures
+- Upload block sizing
+- Internet connection loss doesn't show error code
 
 ## The prompt that worked  (paste here when you find it)
 [Paste once Claude starts producing good output]
