@@ -5,6 +5,9 @@ const previewImg = document.getElementById('preview-img');
 const roastBtn = document.getElementById('roast-btn');
 const slider = document.getElementById('brutality-slider');
 const sliderFill = document.getElementById('slider-fill');
+const sliderVal = document.getElementById('slider-val');
+const sliderEmoji = document.getElementById('slider-emoji');
+const uploadHint = document.getElementById('upload-hint');
 const sliderLabels = document.querySelectorAll('#slider-labels span');
 const output = document.getElementById('output');
 const roastText = document.getElementById('roast-text');
@@ -23,6 +26,9 @@ const SLIDER_COLORS = [
   '#FF4500', // 5 – inferno
 ];
 
+const NUMBER_COLORS = ['#a3e635', '#facc15', '#fb923c', '#ef4444', '#dc2626'];
+const SLIDER_EMOJIS = ['😊', '😏', '🔥', '😈', '💀'];
+
 function updateSlider() {
   const val = parseInt(slider.value);
   const pct = ((val - 1) / 4) * 100;
@@ -33,6 +39,8 @@ function updateSlider() {
   sliderLabels.forEach((label, i) => {
     label.style.color = i + 1 === val ? color : '#555';
   });
+  sliderVal.style.color = NUMBER_COLORS[val - 1];
+  sliderEmoji.textContent = SLIDER_EMOJIS[val - 1];
 }
 
 slider.addEventListener('input', updateSlider);
@@ -64,6 +72,7 @@ function loadFile(file) {
     preview.classList.remove('hidden');
     dropZone.classList.add('has-image');
     roastBtn.disabled = false;
+    uploadHint.classList.remove('hidden');
     hideOutput();
   };
   reader.readAsDataURL(file);
