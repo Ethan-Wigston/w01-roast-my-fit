@@ -25,9 +25,19 @@
     body { font-family: 'Inter', sans-serif; }
 
     /* ── column dividers (0.5px per spec) ── */
-    #right-col { border-top: 0.5px solid #222; }
+    #right-col { border-top: 4px solid #222; }
     @media (min-width: 768px) {
-      #left-col  { border-right: 0.5px solid #222; }
+      #left-col  { position: relative; }
+      #left-col::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 1.25rem;
+        width: 4px;
+        background: #222;
+        border-radius: 2px;
+      }
       #right-col { border-top: none; }
     }
 
