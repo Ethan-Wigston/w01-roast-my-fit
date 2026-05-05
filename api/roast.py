@@ -23,16 +23,16 @@ def _extract_image(image_base64: str) -> tuple[str, str]:
 
 
 def _parse_response(text: str) -> dict:
+    if "🔥 THE ROAST" not in text:
+        return {"error": text.strip()}
     roast = ""
     feedback = ""
     if "👔 REAL TALK" in text:
         parts = text.split("👔 REAL TALK")
         roast = parts[0].replace("🔥 THE ROAST", "").strip()
         feedback = parts[1].strip()
-    elif "🔥 THE ROAST" in text:
-        roast = text.replace("🔥 THE ROAST", "").strip()
     else:
-        roast = text.strip()
+        roast = text.replace("🔥 THE ROAST", "").strip()
     return {"roast": roast, "feedback": feedback}
 
 
