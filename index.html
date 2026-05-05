@@ -109,6 +109,28 @@
       50%       { opacity: 0.3; }
     }
     #loading-icon { animation: flicker 1.2s ease-in-out infinite; }
+
+    /* ── file type toast ── */
+    @keyframes float-toast {
+      0%   { transform: translate(-50%, -40px); opacity: 0; }
+      60%  { transform: translate(-50%, 8px);   opacity: 1; }
+      100% { transform: translate(-50%, 40px);  opacity: 0; }
+    }
+    .float-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 9999;
+      padding: 10px 20px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      border: 1px solid #333;
+      pointer-events: none;
+      white-space: nowrap;
+      animation: float-toast 3s linear forwards;
+    }
   </style>
 </head>
 
@@ -148,7 +170,7 @@
                  class="w-full h-full rounded-md object-contain" />
           </div>
 
-          <input id="file-input" type="file" accept="image/*" class="hidden" />
+          <input id="file-input" type="file" accept=".jpg,.jpeg,.png,.gif,.webp" class="hidden" />
         </div>
         <p id="upload-hint" class="hidden text-center text-[#555]" style="font-size:0.5625rem;">Click the box to upload a different image</p>
         </div>

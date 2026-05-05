@@ -16,6 +16,7 @@ const loading = document.getElementById('loading');
 const errorMsg = document.getElementById('error-msg');
 
 let imageBase64 = null;
+const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
 // ── Slider color ──────────────────────────────────────────────────────────────
 const SLIDER_COLORS = [
@@ -63,8 +64,18 @@ function resizeToBase64(dataUrl, maxWidth = 800) {
   });
 }
 
+function showFileTypeError() {
+  const el = document.createElement('p');
+  el.className = 'float-toast';
+  el.textContent = 'Please upload an image file (JPG, PNG, GIF, or WEBP)';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
 function loadFile(file) {
-  if (!file || !file.type.startsWith('image/')) return;
+  fileInput.value = '';
+  if (!file) return;
+  if (!ALLOWED_TYPES.has(file.type)) { showFileTypeError(); return; }
   const reader = new FileReader();
   reader.onload = async (e) => {
     imageBase64 = await resizeToBase64(e.target.result); // full data URL; backend strips prefix
