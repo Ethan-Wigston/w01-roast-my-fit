@@ -44,6 +44,7 @@ def call_claude(image_base64: str, brutality_level: int) -> dict:
     message = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=1024,
+        temperature=0.9,
         system=system_prompt,
         messages=[
             {
