@@ -10,8 +10,7 @@ const sliderEmoji = document.getElementById('slider-emoji');
 const uploadHint = document.getElementById('upload-hint');
 const sliderLabels = document.querySelectorAll('#slider-labels span');
 const output = document.getElementById('output');
-const roastText = document.getElementById('roast-text');
-const feedbackText = document.getElementById('feedback-text');
+const OUTPUT_ORIGINAL_HTML = output.innerHTML;
 const loading = document.getElementById('loading');
 const errorMsg = document.getElementById('error-msg');
 
@@ -62,6 +61,10 @@ function resizeToBase64(dataUrl, maxWidth = 800) {
     };
     img.src = dataUrl;
   });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function showFileTypeError() {
@@ -134,6 +137,20 @@ roastBtn.addEventListener('click', async () => {
       return;
     }
 
+    if (data.error) {
+      loading.classList.add('hidden');
+      output.innerHTML =
+        `<div>` +
+        `<p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:#fff;margin-bottom:0.5rem;">Oops...</p>` +
+        `<p style="font-size:0.8125rem;color:#fff;line-height:1.625;">${escHtml(data.error)}</p>` +
+        `</div>`;
+      output.classList.remove('hidden');
+      roastBtn.disabled = false;
+      dropZone.classList.remove('uploading');
+      fileInput.disabled = false;
+      return;
+    }
+
     showResult(data.roast, data.feedback);
   } catch (err) {
     clearTimeout(timeoutId);
@@ -157,8 +174,11 @@ function showLoading() {
 
 function showResult(roast, feedback) {
   loading.classList.add('hidden');
-  roastText.textContent = roast;
-  feedbackText.textContent = feedback;
+  if (!document.getElementById('roast-text')) {
+    output.innerHTML = OUTPUT_ORIGINAL_HTML;
+  }
+  document.getElementById('roast-text').textContent = roast;
+  document.getElementById('feedback-text').textContent = feedback;
   output.classList.remove('hidden');
   errorMsg.classList.add('hidden');
   roastBtn.disabled = false;
