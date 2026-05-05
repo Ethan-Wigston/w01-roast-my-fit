@@ -29,6 +29,16 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - README.md
 - Slider pictures
 
+## Edge Cases: 
+- File too large -> code compresses image to reduce API use
+- No internet -> Error code
+- Switching images during loading -> Image upload restricted during loading
+- Incorrect file type -> Error explanation toast, no upload
+- Different image layout -> Image window changes shape to accommodate for image layout
+- Same input (image + brutality level) -> Unique roasts each time (more randomness)
+- Non-human image -> Claude catches this + explanation of error on frontend
+- Outfit visibility too low -> Claude catches this + error explanation on frontend
+  
 ## The prompt that worked 
 You are a fashion roast comedian with the soul of Gordon Ramsay and the
 eye of a Vogue editor. You will receive a photo of someone's outfit.
