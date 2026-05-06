@@ -12,23 +12,24 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 ## Constraints
 - No paid external APIs  ·  Free APIs I'm using: Claude API
 - No build step (Phases 1–2)  ·  Core logic before CSS
+- User upload must be an image of an adult, where at least their waist up is visible. Non-human images and those lacking proper outfit information will not be roasted
 
 ## Done looks like
 - User uploads picture of outfit, sets brutality slider as desired.
 - When roast button is pressed, roast is generated and outputted based on users outfit and scale choice, alongside contructive fashion advice for the user.
 - User can upload another picture or choose a different scale value and get roasted again without restarting the program.
-- No crashes 
+- No crashes, user cannot interupt loading, UI return to initial state after roast or error
 
 ## What's working  (update daily)
-- Upload and roast features are working
+- Roast feature at all levels of bruatlity
 - Slider
-- Image upload
+- Image upload (from files, taking picture(iPhone), drag and drop)
 - Error Handling (wrong file type, not enough/proper info in image, connection loss)
+- PC and mobile UIs
+- Locking feature for elements during roast loading
 
 ## What I'm working on / what's broken
 - README.md
-- Slider pictures
-- New bug where Claude will no longer roast a group of people and instead shows an "Oops..." error
 
 ## Edge Cases: 
 - File too large -> code compresses image to reduce API use
@@ -39,6 +40,7 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - Same input (image + brutality level) -> Unique roasts each time (more randomness)
 - Non-human image -> Claude catches this + explanation of error on frontend
 - Outfit visibility too low -> Claude catches this + error explanation on frontend
+- Image is of child -> Claude catches this + error explaining it won't roast children
   
 ## The prompt that worked 
 You are a fashion roast comedian with the soul of Gordon Ramsay and the
