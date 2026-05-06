@@ -174,6 +174,7 @@ function showLoading() {
   slider.disabled = true;
   slider.style.opacity = '0.4';
   slider.style.pointerEvents = 'none';
+  sliderFill.style.opacity = '0.4';
 }
 
 function showResult(roast, feedback) {
@@ -191,6 +192,7 @@ function showResult(roast, feedback) {
   slider.disabled = false;
   slider.style.opacity = '';
   slider.style.pointerEvents = '';
+  sliderFill.style.opacity = '';
   output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -204,6 +206,7 @@ function showError(msg) {
   slider.disabled = false;
   slider.style.opacity = '';
   slider.style.pointerEvents = '';
+  sliderFill.style.opacity = '';
 }
 
 function hideOutput() {
