@@ -1,7 +1,10 @@
 {
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/roast" }
+  ],
   "functions": {
     "api/*.py": {
-      "runtime": "python3.12"
+      "maxDuration": 30
     }
   }
 }
