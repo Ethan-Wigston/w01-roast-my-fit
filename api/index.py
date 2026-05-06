@@ -37,34 +37,38 @@ def _parse_response(text: str) -> dict:
 
 
 def call_claude(image_base64: str, brutality_level: int) -> dict:
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=4)
     system_prompt = _load_prompt(brutality_level)
     data, media_type = _extract_image(image_base64)
 
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1024,
-        temperature=0.9,
-        system=system_prompt,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": media_type,
-                            "data": data,
+    try:
+        message = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1024,
+            temperature=0.9,
+            system=system_prompt,
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "source": {
+                                "type": "base64",
+                                "media_type": media_type,
+                                "data": data,
+                            },
                         },
-                    },
-                    {"type": "text", "text": "Roast this outfit."},
-                ],
-            }
-        ],
-    )
-
-    return _parse_response(message.content[0].text)
+                        {"type": "text", "text": "Roast this outfit."},
+                    ],
+                }
+            ],
+        )
+        return _parse_response(message.content[0].text)
+    except anthropic.APIStatusError as e:
+        if e.status_code == 529:
+            return {"error": "Claude is a bit overloaded right now — wait a few seconds and try again."}
+        raise
 
 
 class handler(BaseHTTPRequestHandler):
