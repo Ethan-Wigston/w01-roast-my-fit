@@ -120,7 +120,7 @@ roastBtn.addEventListener('click', async () => {
   const timeoutId = setTimeout(() => controller.abort(), 30000);
 
   try {
-    const res = await fetch('/api/roast', {
+    const res = await fetch('/api/index', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
