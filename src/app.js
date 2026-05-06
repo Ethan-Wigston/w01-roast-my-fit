@@ -171,6 +171,9 @@ function showLoading() {
   roastBtn.disabled = true;
   dropZone.classList.add('uploading');
   fileInput.disabled = true;
+  slider.disabled = true;
+  slider.style.opacity = '0.4';
+  slider.style.pointerEvents = 'none';
 }
 
 function showResult(roast, feedback) {
@@ -185,6 +188,9 @@ function showResult(roast, feedback) {
   roastBtn.disabled = false;
   dropZone.classList.remove('uploading');
   fileInput.disabled = false;
+  slider.disabled = false;
+  slider.style.opacity = '';
+  slider.style.pointerEvents = '';
   output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -195,6 +201,9 @@ function showError(msg) {
   roastBtn.disabled = false;
   dropZone.classList.remove('uploading');
   fileInput.disabled = false;
+  slider.disabled = false;
+  slider.style.opacity = '';
+  slider.style.pointerEvents = '';
 }
 
 function hideOutput() {
