@@ -149,6 +149,10 @@ roastBtn.addEventListener('click', async () => {
       roastBtn.disabled = false;
       dropZone.classList.remove('uploading');
       fileInput.disabled = false;
+      slider.disabled = false;
+      slider.style.opacity = '';
+      slider.style.pointerEvents = '';
+      sliderFill.style.opacity = '';
       return;
     }
 
