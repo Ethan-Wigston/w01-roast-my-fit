@@ -27,7 +27,6 @@ const SLIDER_COLORS = [
 ];
 
 const NUMBER_COLORS = ['#a3e635', '#facc15', '#fb923c', '#ef4444', '#dc2626'];
-const SLIDER_EMOJIS = ['😊', '😏', '🔥', '😈', '💀'];
 
 function updateSlider() {
   const val = parseInt(slider.value);
@@ -40,7 +39,9 @@ function updateSlider() {
     label.style.color = i + 1 === val ? color : '#555';
   });
   sliderVal.style.color = NUMBER_COLORS[val - 1];
-  sliderEmoji.textContent = SLIDER_EMOJIS[val - 1];
+  sliderEmoji.src = `/Images/Slider%20Images/level${val}.png`;
+  sliderEmoji.style.filter = `drop-shadow(0 0 10px ${NUMBER_COLORS[val - 1]})`;
+
 }
 
 slider.addEventListener('input', updateSlider);
