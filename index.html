@@ -192,15 +192,18 @@
             <input id="brutality-slider" type="range" min="1" max="5" value="3" step="1" class="relative w-full" />
           </div>
 
-          <div id="slider-labels" class="flex justify-between text-center leading-tight" style="font-size:0.5625rem;">
-            <span class="w-1/5">Polite</span>
-            <span class="w-1/5">Disap&shy;pointed</span>
-            <span class="w-1/5">Night&shy;mare</span>
-            <span class="w-1/5">Hell's<br/>kitchen</span>
-            <span class="w-1/5 font-medium">IT'S<br/>RAW</span>
+          <div id="slider-labels" class="relative leading-tight" style="font-size:0.5625rem; height:2.5em;">
+            <span class="absolute" style="left:0%">Polite</span>
+            <span class="absolute text-center" style="left:25%;transform:translateX(-50%)">Disap&shy;pointed</span>
+            <span class="absolute text-center" style="left:50%;transform:translateX(-50%)">Spicy</span>
+            <span class="absolute text-center" style="left:75%;transform:translateX(-50%)">Hell's<br/>kitchen</span>
+            <span class="absolute text-right font-medium" style="right:0%">Night&shy;mare</span>
           </div>
 
-          <div id="slider-emoji" class="text-center text-lg leading-none">😈</div>
+          <div class="flex justify-center mt-1">
+            <img id="slider-emoji" src="/Images/Slider%20Images/level3.png" alt=""
+                 style="width:58px;height:58px;object-fit:contain;transition:filter 0.2s;" />
+          </div>
         </div>
 
         <!-- Roast button -->
