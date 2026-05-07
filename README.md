@@ -1,8 +1,10 @@
-<img width="1918" height="1087" alt="image" src="https://github.com/user-attachments/assets/4ca7b17d-4210-47e9-8001-38a2dc825b00" />
+<img width="1917" height="1030" alt="image" src="https://github.com/user-attachments/assets/187a57f3-1e35-422b-a64a-04137e936f1c" />
 
-Vercel Link https://w01-roast-my-fit.vercel.app/ 
 
-Claude Prompt:
+## Vercel Link:
+https://w01-roast-my-fit.vercel.app/ 
+
+## Claude Prompt:
 
 Before roasting, evaluate the photo.
 
@@ -41,4 +43,4 @@ Format your response EXACTLY like this: 🔥 THE ROAST [your roast here]
 
 *Note: This prompt started the development of the Roast My Fit Project. There have been significant changes to the project from this initial prompt* 
 
-What I'd do differently: [fill on friday]
+## What I'd do differently: [fill on friday]
