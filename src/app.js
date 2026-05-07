@@ -227,9 +227,10 @@ const shareOverlay    = document.getElementById('share-overlay');
 const shareModalClose = document.getElementById('share-modal-close');
 const sharePreviewLoadingEl = document.getElementById('share-preview-loading');
 const sharePreviewImg = document.getElementById('share-preview-img');
-const shareActions    = document.getElementById('share-actions');
-const copyBtn         = document.getElementById('copy-to-clipboard-btn');
-const dlBtn           = document.getElementById('download-btn');
+const shareActions          = document.getElementById('share-actions');
+const sharePreviewContainer = document.getElementById('share-preview-container');
+const copyBtn               = document.getElementById('copy-to-clipboard-btn');
+const dlBtn                 = document.getElementById('download-btn');
 
 let shareCanvas = null;
 
@@ -269,6 +270,15 @@ async function openShareModal() {
   badge.style.color = color;
   document.getElementById('share-card-roast').textContent = roastEl.textContent;
 
+  // Wait one frame so text reflow is computed, then fit image section to container
+  await new Promise(r => requestAnimationFrame(r));
+  if (window.innerWidth < 768) {
+    const containerH = sharePreviewContainer.offsetHeight;
+    const cardTextH  = document.getElementById('share-card-text').offsetHeight;
+    document.getElementById('share-card-image-wrap').style.height =
+      Math.max(containerH - cardTextH, 160) + 'px';
+  }
+
   try {
     const shareCardEl = document.getElementById('share-card');
     shareCanvas = await html2canvas(shareCardEl, {
@@ -292,19 +302,36 @@ async function openShareModal() {
 function closeShareModal() {
   shareModal.classList.add('hidden');
   shareCanvas = null;
+  document.getElementById('share-card-image-wrap').style.height = '';
 }
 
 async function copyShareCard() {
   if (!shareCanvas) return;
   const blob = await new Promise(res => shareCanvas.toBlob(res, 'image/png', 1.0));
+  const file = new File([blob], 'roast_card.png', { type: 'image/png' });
+
+  // Web Share API — opens native share sheet on mobile (iOS/Android)
+  if (navigator.share && navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file] });
+      closeShareModal();
+      return;
+    } catch (e) {
+      if (e.name === 'AbortError') return; // user dismissed sheet, do nothing
+    }
+  }
+
+  // Clipboard API — desktop browsers
   try {
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     closeShareModal();
     showToast('Copied! Paste anywhere to share.');
-  } catch (_) {
-    downloadShareCard();
-    showToast('Saved to files — paste from there or drag into chat.');
-  }
+    return;
+  } catch (_) {}
+
+  // Final fallback — download
+  downloadShareCard();
+  showToast('Saved to files — paste from there or drag into chat.');
 }
 
 function downloadShareCard() {
