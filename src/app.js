@@ -242,7 +242,7 @@ function showToast(msg) {
 }
 
 shareBtn.addEventListener('click', openShareModal);
-historyBtn.addEventListener('click', () => showToast('History Coming Soon...'));
+historyBtn.addEventListener('click', () => showToast('History coming soon...'));
 shareModalClose.addEventListener('click', closeShareModal);
 shareOverlay.addEventListener('click', closeShareModal);
 document.addEventListener('keydown', (e) => {
@@ -271,7 +271,7 @@ async function openShareModal() {
 
   try {
     shareCanvas = await html2canvas(document.getElementById('share-card'), {
-      backgroundColor: '#0d0d0d',
+      backgroundColor: null,
       scale: 2,
       logging: false,
       useCORS: true,
