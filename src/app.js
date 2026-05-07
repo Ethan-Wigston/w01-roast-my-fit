@@ -16,6 +16,7 @@ const loading = document.getElementById('loading');
 const errorMsg = document.getElementById('error-msg');
 
 let imageBase64 = null;
+let currentRoastSnapshot = null;
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
 // ── Slider color ──────────────────────────────────────────────────────────────
@@ -199,6 +200,11 @@ function showResult(roast, feedback) {
   slider.style.pointerEvents = '';
   sliderFill.style.opacity = '';
   output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  currentRoastSnapshot = {
+    imageSrc:  previewImg.src,
+    level:     parseInt(slider.value),
+    roastText: roast,
+  };
 }
 
 function showError(msg) {
@@ -218,6 +224,7 @@ function hideOutput() {
   output.classList.add('hidden');
   errorMsg.classList.add('hidden');
   loading.classList.add('hidden');
+  currentRoastSnapshot = null;
 }
 
 // ── Share ─────────────────────────────────────────────────────────────────────
@@ -251,8 +258,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 async function openShareModal() {
-  const roastEl = document.getElementById('roast-text');
-  if (!roastEl || !roastEl.textContent.trim()) { showToast('Generate a roast first.'); return; }
+  if (!currentRoastSnapshot) { showToast('Generate a roast first.'); return; }
+
+  const { imageSrc, level, roastText } = currentRoastSnapshot;
+  const color = SLIDER_COLORS[level - 1];
 
   shareCanvas = null;
   sharePreviewImg.classList.add('hidden');
@@ -261,14 +270,12 @@ async function openShareModal() {
   shareActions.classList.add('hidden');
   shareModal.classList.remove('hidden');
 
-  const level = parseInt(slider.value);
-  const color = SLIDER_COLORS[level - 1];
-  document.getElementById('share-card-img').src = previewImg.src;
+  document.getElementById('share-card-img').src = imageSrc;
   const badge = document.getElementById('share-card-badge');
   badge.textContent = `Level ${level}`;
   badge.style.borderColor = color;
   badge.style.color = color;
-  document.getElementById('share-card-roast').textContent = roastEl.textContent;
+  document.getElementById('share-card-roast').textContent = roastText;
 
   // Wait one frame so text reflow is computed, then fit image section to container
   await new Promise(r => requestAnimationFrame(r));
