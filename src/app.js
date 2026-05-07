@@ -242,6 +242,7 @@ function showToast(msg) {
 }
 
 shareBtn.addEventListener('click', openShareModal);
+historyBtn.addEventListener('click', () => showToast('History Coming Soon...'));
 shareModalClose.addEventListener('click', closeShareModal);
 shareOverlay.addEventListener('click', closeShareModal);
 document.addEventListener('keydown', (e) => {
