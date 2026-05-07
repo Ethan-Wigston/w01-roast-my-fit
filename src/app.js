@@ -8,6 +8,7 @@ const sliderFill = document.getElementById('slider-fill');
 const sliderVal = document.getElementById('slider-val');
 const sliderEmoji = document.getElementById('slider-emoji');
 const uploadHint = document.getElementById('upload-hint');
+const historyBtn = document.getElementById('history-btn');
 const sliderLabels = document.querySelectorAll('#slider-labels span');
 const output = document.getElementById('output');
 const OUTPUT_ORIGINAL_HTML = output.innerHTML;
