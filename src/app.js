@@ -219,3 +219,98 @@ function hideOutput() {
   errorMsg.classList.add('hidden');
   loading.classList.add('hidden');
 }
+
+// ── Share ─────────────────────────────────────────────────────────────────────
+const shareBtn        = document.getElementById('share-btn');
+const shareModal      = document.getElementById('share-modal');
+const shareOverlay    = document.getElementById('share-overlay');
+const shareModalClose = document.getElementById('share-modal-close');
+const sharePreviewLoadingEl = document.getElementById('share-preview-loading');
+const sharePreviewImg = document.getElementById('share-preview-img');
+const shareActions    = document.getElementById('share-actions');
+const copyBtn         = document.getElementById('copy-to-clipboard-btn');
+const dlBtn           = document.getElementById('download-btn');
+
+let shareCanvas = null;
+
+function showToast(msg) {
+  const el = document.createElement('p');
+  el.className = 'float-toast';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+shareBtn.addEventListener('click', openShareModal);
+shareModalClose.addEventListener('click', closeShareModal);
+shareOverlay.addEventListener('click', closeShareModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !shareModal.classList.contains('hidden')) closeShareModal();
+});
+
+async function openShareModal() {
+  const roastEl = document.getElementById('roast-text');
+  if (!roastEl || !roastEl.textContent.trim()) { showToast('Generate a roast first.'); return; }
+
+  shareCanvas = null;
+  sharePreviewImg.classList.add('hidden');
+  sharePreviewImg.src = '';
+  sharePreviewLoadingEl.classList.remove('hidden');
+  shareActions.classList.add('hidden');
+  shareModal.classList.remove('hidden');
+
+  const level = parseInt(slider.value);
+  const color = SLIDER_COLORS[level - 1];
+  document.getElementById('share-card-img').src = previewImg.src;
+  const badge = document.getElementById('share-card-badge');
+  badge.textContent = `Level ${level}`;
+  badge.style.borderColor = color;
+  badge.style.color = color;
+  document.getElementById('share-card-roast').textContent = roastEl.textContent;
+  document.getElementById('share-card-feedback').textContent = document.getElementById('feedback-text').textContent;
+
+  try {
+    shareCanvas = await html2canvas(document.getElementById('share-card'), {
+      backgroundColor: '#0d0d0d',
+      scale: 2,
+      logging: false,
+      useCORS: true,
+    });
+    sharePreviewImg.src = shareCanvas.toDataURL('image/png');
+    sharePreviewLoadingEl.classList.add('hidden');
+    sharePreviewImg.classList.remove('hidden');
+    shareActions.classList.remove('hidden');
+  } catch (_) {
+    closeShareModal();
+    showToast('Could not generate share card.');
+  }
+}
+
+function closeShareModal() {
+  shareModal.classList.add('hidden');
+  shareCanvas = null;
+}
+
+async function copyShareCard() {
+  if (!shareCanvas) return;
+  const blob = await new Promise(res => shareCanvas.toBlob(res, 'image/png', 1.0));
+  try {
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    closeShareModal();
+    showToast('Copied! Paste anywhere to share.');
+  } catch (_) {
+    downloadShareCard();
+    showToast('Saved to files — paste from there or drag into chat.');
+  }
+}
+
+function downloadShareCard() {
+  if (!shareCanvas) return;
+  const a = document.createElement('a');
+  a.href = shareCanvas.toDataURL('image/png');
+  a.download = 'roast_card.png';
+  a.click();
+}
+
+copyBtn.addEventListener('click', copyShareCard);
+dlBtn.addEventListener('click', () => { downloadShareCard(); closeShareModal(); });
