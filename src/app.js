@@ -267,7 +267,6 @@ async function openShareModal() {
   badge.style.borderColor = color;
   badge.style.color = color;
   document.getElementById('share-card-roast').textContent = roastEl.textContent;
-  document.getElementById('share-card-feedback').textContent = document.getElementById('feedback-text').textContent;
 
   try {
     shareCanvas = await html2canvas(document.getElementById('share-card'), {

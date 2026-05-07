@@ -272,18 +272,13 @@
 
   <!-- Share card (off-screen; captured by html2canvas) -->
   <div id="share-card" style="position:absolute;left:-9999px;top:0;width:600px;background:#0d0d0d;border-radius:12px;overflow:hidden;font-family:'Inter',sans-serif;">
-    <div style="position:relative;height:180px;overflow:hidden;background:#111;">
+    <div style="position:relative;height:270px;overflow:hidden;background:#111;">
       <img id="share-card-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      <span id="share-card-badge" style="position:absolute;top:12px;right:12px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.06em;background:rgba(0,0,0,0.65);border:1px solid #ef4444;color:#ef4444;font-family:'Inter',sans-serif;"></span>
+      <span id="share-card-badge" style="position:absolute;top:12px;right:14px;font-size:11px;font-weight:600;letter-spacing:0.06em;color:#ef4444;font-family:'Inter',sans-serif;text-shadow:0 1px 4px rgba(0,0,0,0.9);"></span>
     </div>
-    <div style="padding:16px 20px 14px;">
+    <div style="padding:16px 20px 16px;">
       <p style="margin:0 0 5px;color:#ef4444;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;font-family:'Inter',sans-serif;font-weight:500;">The Roast</p>
-      <p id="share-card-roast" style="margin:0 0 12px;color:#fff;font-size:13px;line-height:1.55;max-height:72px;overflow:hidden;font-family:'Inter',sans-serif;"></p>
-      <div style="border-top:1px solid #1e1e1e;padding-top:10px;">
-        <p style="margin:0 0 5px;color:#2dd4bf;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;font-family:'Inter',sans-serif;font-weight:500;">Real Talk</p>
-        <p id="share-card-feedback" style="margin:0 0 10px;color:#666;font-size:12px;line-height:1.5;max-height:44px;overflow:hidden;font-family:'Inter',sans-serif;"></p>
-      </div>
-      <p style="margin:0;text-align:right;color:#444;font-size:10px;letter-spacing:0.08em;font-family:'Inter',sans-serif;">roastmyfit</p>
+      <p id="share-card-roast" style="margin:0;color:#fff;font-size:13px;line-height:1.55;max-height:145px;overflow:hidden;font-family:'Inter',sans-serif;"></p>
     </div>
   </div>
 
@@ -293,7 +288,10 @@
     <div class="relative z-10 bg-[#0d0d0d] border border-[#333] rounded-xl w-full max-w-[620px] p-5 flex flex-col gap-4">
 
       <div class="flex items-center justify-between">
-        <span class="text-white text-[0.6875rem] uppercase tracking-widest font-medium">Share Your Roast</span>
+        <div class="flex flex-col gap-0.5">
+          <span class="text-white text-[0.6875rem] uppercase tracking-widest font-medium">Share Your Roast</span>
+          <span class="text-[#555] text-[0.5625rem]">w01-roast-my-fit-vercel.app</span>
+        </div>
         <button id="share-modal-close" class="w-7 h-7 rounded-full bg-[#1a1a1a] flex items-center justify-center text-[#888] hover:text-white transition-colors" style="border:0.5px solid #333;">
           <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
