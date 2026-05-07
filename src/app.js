@@ -280,10 +280,14 @@ async function openShareModal() {
   // Wait one frame so text reflow is computed, then fit image section to container
   await new Promise(r => requestAnimationFrame(r));
   if (window.innerWidth < 768) {
-    const containerH = sharePreviewContainer.offsetHeight;
-    const cardTextH  = document.getElementById('share-card-text').offsetHeight;
+    const shareCardEl = document.getElementById('share-card');
+    const containerH  = sharePreviewContainer.offsetHeight;
+    const containerW  = sharePreviewContainer.offsetWidth;
+    const cardW       = shareCardEl.offsetWidth;
+    const scale       = containerW / cardW;
+    const cardTextH   = document.getElementById('share-card-text').offsetHeight;
     document.getElementById('share-card-image-wrap').style.height =
-      Math.max(containerH - cardTextH, 160) + 'px';
+      Math.max((containerH / scale) - cardTextH, 160) + 'px';
   }
 
   try {
