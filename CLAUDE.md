@@ -33,6 +33,7 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 ## What I'm working on / what's broken
 - README.md
 - Roast history feature
+- UI improvements (title sizing and formatting on mobile)
 
 ## Edge Cases: 
 - File too large -> code compresses image to reduce API use
