@@ -270,11 +270,14 @@ async function openShareModal() {
   document.getElementById('share-card-roast').textContent = roastEl.textContent;
 
   try {
-    shareCanvas = await html2canvas(document.getElementById('share-card'), {
+    const shareCardEl = document.getElementById('share-card');
+    shareCanvas = await html2canvas(shareCardEl, {
       backgroundColor: null,
       scale: 2,
       logging: false,
       useCORS: true,
+      width: shareCardEl.offsetWidth,
+      height: shareCardEl.offsetHeight,
     });
     sharePreviewImg.src = shareCanvas.toDataURL('image/png');
     sharePreviewLoadingEl.classList.add('hidden');
