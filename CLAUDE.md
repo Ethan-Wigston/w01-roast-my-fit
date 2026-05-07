@@ -1,7 +1,7 @@
 # CLAUDE.md — Week 1: Roast My Fit
 
 ## What this is
-Usable by anyone, this program takes a picture of your outfit, outputs a roast of the outfit based on the brutality slider input, and constructive and useful feedback on the outfit.
+Usable by anyone, this program takes a picture of your outfit, outputs a roast of the outfit based on the brutality slider input, and constructive and useful feedback on the outfit, the roast can then be shared
 
 ## Stack
 - Frontend: [Vanilla JS + HTML/CSS | N/A]
@@ -19,6 +19,7 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - When roast button is pressed, roast is generated and outputted based on users outfit and scale choice, alongside contructive fashion advice for the user.
 - User can upload another picture or choose a different scale value and get roasted again without restarting the program.
 - No crashes, user cannot interupt loading, UI return to initial state after roast or error
+- User can share roast in a variety of different ways
 
 ## What's working  (update daily)
 - Roast feature at all levels of bruatlity
@@ -27,9 +28,11 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - Error Handling (wrong file type, not enough/proper info in image, connection loss)
 - PC and mobile UIs
 - Locking feature for elements during roast loading
+- Share feature (copy to clipboard and download file options)
 
 ## What I'm working on / what's broken
 - README.md
+- Roast history feature
 
 ## Edge Cases: 
 - File too large -> code compresses image to reduce API use
@@ -41,6 +44,10 @@ Usable by anyone, this program takes a picture of your outfit, outputs a roast o
 - Non-human image -> Claude catches this + explanation of error on frontend
 - Outfit visibility too low -> Claude catches this + error explanation on frontend
 - Image is of child -> Claude catches this + error explaining it won't roast children
+- Share button pressed before image uploaded or image is generated -> popup doesn't show up, error toast appear explaining error
+- Information is changed after roast is generated but before share button is pressed (ex: generated at level 1, then swapped to level 5) -> intiial roasting info used
+- Share button pressed after new image upload -> error toast
+- Roast history button pressed (function not yet developed) -> "coming soon" toast
   
 ## The prompt that worked 
 Before roasting, evaluate the photo.
